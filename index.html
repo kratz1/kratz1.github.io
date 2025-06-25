@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pour Toi, Mon Amour</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Playfair+Display&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(120deg, #fce4ec, #f3e5f5, #e8f5e8);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      color: #3e3e3e;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .petal {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      background: radial-gradient(ellipse at center, #ffb3d9 0%, #ff80cc 50%, #ff4db3 100%);
+      border-radius: 50% 0 50% 0;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+      animation: fall linear infinite;
+    }
+
+    .petal:nth-child(odd) {
+      background: radial-gradient(ellipse at center, #ffc0cb 0%, #ffb6c1 50%, #ff91a4 100%);
+      transform: rotate(45deg);
+    }
+
+    .petal:nth-child(even) {
+      background: radial-gradient(ellipse at center, #e6e6fa 0%, #dda0dd 50%, #da70d6 100%);
+      transform: rotate(-45deg);
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) translateX(0) rotate(0deg);
+        opacity: 0.8;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .heart-float {
+      position: fixed;
+      color: #ff69b4;
+      font-size: 20px;
+      pointer-events: none;
+      z-index: 0;
+      animation: heartFloat 8s ease-in-out infinite;
+      opacity: 0.3;
+    }
+
+    @keyframes heartFloat {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.3;
+      }
+      50% {
+        transform: translateY(-20px) scale(1.2);
+        opacity: 0.6;
+      }
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(2px);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      text-align: center;
+      color: #c2185b;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: scale(0.5);
+      animation: titleBoom 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    @keyframes titleBoom {
+      0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg);
+      }
+      70% {
+        opacity: 1;
+        transform: scale(1.1) rotate(2deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    .poem {
+      margin-top: 40px;
+    }
+
+    .verse {
+      opacity: 0;
+      transform: translateX(-50px) rotateY(90deg);
+      animation: verseSweep 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      animation-delay: var(--delay);
+      margin-bottom: 2.5em;
+      font-size: 1.3rem;
+      line-height: 1.7;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      border-left: 4px solid #c2185b;
+      backdrop-filter: blur(5px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .verse:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(194, 24, 91, 0.2);
+    }
+
+    @keyframes verseSweep {
+      0% {
+        opacity: 0;
+        transform: translateX(-50px) rotateY(90deg) scale(0.8);
+      }
+      60% {
+        opacity: 0.8;
+        transform: translateX(5px) rotateY(-5deg) scale(1.02);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0) rotateY(0deg) scale(1);
+      }
+    }
+
+    footer {
+      text-align: center;
+      font-size: 1.4rem;
+      font-family: 'Dancing Script', cursive;
+      margin-top: 50px;
+      color: #6a1b9a;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: footerGlow 2s ease forwards;
+      animation-delay: 8s;
+      text-shadow: 0 0 20px rgba(106, 27, 154, 0.3);
+    }
+
+    @keyframes footerGlow {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+        text-shadow: 0 0 0 rgba(106, 27, 154, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        text-shadow: 0 0 20px rgba(106, 27, 154, 0.5);
+      }
+    }
+
+    /* Sparkles */
+    .sparkle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      animation: sparkle 3s linear infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      .container {
+        margin: 20px;
+        padding: 40px 15px;
+      }
+      .verse {
+        font-size: 1.1rem;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Pétales de cerisier -->
+  <div id="petals"></div>
+  
+  <!-- Cœurs flottants -->
+  <div id="hearts"></div>
+  
+  <!-- Étoiles scintillantes -->
+  <div id="sparkles"></div>
+
+  <div class="container">
+    <h1>Pour Toi, Mon Amour</h1>
+    <div class="poem">
+      <div class="verse" style="--delay: 1s">
+        On a toute la vie devant nous,<br />
+        Mais à tes côtés, le temps me semble court.<br />
+        Chaque seconde loin de toi me brûle, me rend sourd,<br />
+        Comme si l'amour criait en silence — rien qu'à nous.
+      </div>
+      <div class="verse" style="--delay: 2s">
+        Je ne peux dire que je t'ai aimé au premier regard,<br />
+        Mais dès ta première parole, j'ai su.<br />
+        Ton rire, ton souffle, ton monde, ton bazar —<br />
+        J'y ai trouvé mon refuge absolu.
+      </div>
+      <div class="verse" style="--delay: 3s">
+        Tu as changé ma vie, tu l'as retournée,<br />
+        Et dans cet enfer, tu es mon paradis.<br />
+        Je t'appartiens, cœur, corps et volonté,<br />
+        Je t'aime comme personne ne l'a jamais dit.
+      </div>
+      <div class="verse" style="--delay: 4s">
+        Chaque jour, je t'aime plus que la veille,<br />
+        Et bien moins que demain, je le sais.<br />
+        Je veux vieillir avec toi, que le temps s'émerveille,<br />
+        De deux âmes liées, sans jamais s'éloigner.
+      </div>
+      <div class="verse" style="--delay: 5s">
+        Je préfère vivre seul que vivre sans toi,<br />
+        Mais mille fois vivre avec toi, même dans le chaos,<br />
+        Plutôt que de marcher à côté, par peur de l'émoi,<br />
+        De ce feu en nous qu'on pensait parfois trop beau.
+      </div>
+      <div class="verse" style="--delay: 6s">
+        Je me suis battu contre moi-même, souvent,<br />
+        Pour devenir celui qui ne te décevra jamais.<br />
+        Je ne suis pas parfait, mais pleinement vivant,<br />
+        Et je ferai tout pour être celui que tu aimais.
+      </div>
+      <div class="verse" style="--delay: 7s">
+        Je ne veux pas une amourette qui passe,<br />
+        Je veux construire un avenir à ton bras,<br />
+        Te tenir, te chérir, dans l'ombre ou la grâce,<br />
+        Faire de toi ma raison, mon chez-moi.
+      </div>
+      <div class="verse" style="--delay: 8s">
+        Je te prioriserai, toi, avant tout et tous,<br />
+        Je ferai n'importe quoi pour qu'on tienne,<br />
+        Et si tu doutes encore, souviens-toi — en nous,<br />
+        Brûle un amour que rien n'éteint, que rien n'enchaîne.
+      </div>
+    </div>
+    <footer>
+      Je t'aime infiniment
+    </footer>
+  </div>
+
+  <script>
+    // Création des pétales de cerisier
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (Math.random() * 3 + 5) + 's';
+      petal.style.animationDelay = Math.random() * 2 + 's';
+      document.getElementById('petals').appendChild(petal);
+      
+      setTimeout(() => {
+        petal.remove();
+      }, 8000);
+    }
+
+    // Création des cœurs flottants
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart-float';
+      heart.innerHTML = '♥';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = Math.random() * 100 + 'vh';
+      heart.style.animationDelay = Math.random() * 4 + 's';
+      document.getElementById('hearts').appendChild(heart);
+    }
+
+    // Création des étoiles scintillantes
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.top = Math.random() * 100 + 'vh';
+      sparkle.style.animationDelay = Math.random() * 3 + 's';
+      document.getElementById('sparkles').appendChild(sparkle);
+      
+      setTimeout(() => {
+        sparkle.remove();
+      }, 3000);
+    }
+
+    // Lancement des animations
+    setInterval(createPetal, 300);
+    setInterval(createSparkle, 500);
+    
+    // Création des cœurs (moins fréquent)
+    for (let i = 0; i < 8; i++) {
+      createHeart();
+    }
+
+    // Effet de survol pour les vers
+    document.querySelectorAll('.verse').forEach((verse, index) => {
+      verse.addEventListener('mouseenter', () => {
+        // Petit effet de particules au survol
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => createSparkle(), i * 100);
+        }
+      });
+    });
+
+    // Animation d'apparition progressive du conteneur
+    window.addEventListener('load', () => {
+      document.querySelector('.container').style.animation = 'containerFade 1.5s ease forwards';
+    });
+  </script>
+
+  <style>
+    @keyframes containerFade {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</body>
+</html>
